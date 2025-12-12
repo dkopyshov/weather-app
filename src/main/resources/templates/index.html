@@ -5,10 +5,35 @@
     <title>Weather Viewer - Homepage</title>
 </head>
 <body>
-    <header th:insert="~{header :: header}">
-    </header>
-    <footer>
-        Мини проект на Spring Boot 3
-    </footer>
+<header><h2>Погода</h2>
+</header>
+<form th:action="@{/search}" method="get">
+    <label><input name="locationName" type="search" autocomplete="off"></label>
+    <button type="submit">Search</button>
+</form>
+<div data-th-if="${errors}">
+    <ul>
+        <li data-th-each="error: ${errors}" data-th-text="${error}"></li>
+    </ul>
+</div>
+<div data-th-each="weather : ${userWeatherData}">
+    <form th:action="@{/delete}" method="post">
+        <div data-th-text="${weather.localName()}"/>
+        <div data-th-text="${weather.temperature()}"/>
+        <div data-th-text="${weather.feelsLike()}"/>
+        <div data-th-text="${weather.weatherMain()}"/>
+        <div data-th-text="${weather.cloudiness()}"/>
+        <img th:src="'https://openweathermap.org/img/wn/' + ${weather.weatherIcon} + '@4x.png'"
+             th:alt="${weather.weatherMain()}"/>
+        <div>
+            <input name="userLocationDataId" id="userLocationDataId" th:value="${weather.userLocationDataId()}"
+                   type="hidden"/>
+            <button type="submit" data-th-text="#{search.delete.button}"/>
+        </div>
+    </form>
+</div>
+<footer>
+    Мини проект на Spring Boot 3
+</footer>
 </body>
 </html>

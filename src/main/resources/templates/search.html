@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Viewer - Homepage</title>
+</head>
+<body>
+<header><h2>Погода</h2>
+</header>
+<a th:href="@{/}" th:text="#{search.back.button}"></a>
+<form th:action="@{/search}" method="get">
+    <label><input name="locationName" th:value="${locationName}" type="search" autocomplete="off"></label>
+    <button type="submit">Search</button>
+</form>
+<div data-th-if="${errors}">
+    <ul>
+        <li data-th-each="error: ${errors}" data-th-text="${error}"></li>
+    </ul>
+</div>
+<div data-th-each="geo : ${foundGeoData}">
+    <form th:action="@{/add}" th:object="${geo}" method="post">
+        <div data-th-text="${geo.localName}"/>
+        <div data-th-text="${geo.latitude}"/>
+        <div data-th-text="${geo.longitude}"/>
+        <div data-th-text="${geo.country}"/>
+        <div data-th-if="${geo.state}">
+            <div data-th-text="${geo.state}"/>
+        </div>
+        <div>
+            <input name="localName" id="localName" th:value="${geo.localName}" type="hidden"/>
+            <input name="latitude" id="latitude" th:value="${geo.latitude}" type="hidden"/>
+            <input name="longitude" id="longitude" th:value="${geo.longitude}" type="hidden"/>
+            <input name="country" id="country" th:value="${geo.country}" type="hidden"/>
+            <input name="state" id="state" th:value="${geo.state}" type="hidden"/>
+            <button type="submit" data-th-text="#{search.add.button}"/>
+        </div>
+    </form>
+</div>
+<footer>
+    Мини проект на Spring Boot 3
+</footer>
+</body>
+</html>
