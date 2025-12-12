@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:weatherdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    username: test
+    password: test
+
+weather:
+  api:
+    server:
+      url: 'https://api.openweathermap.org'
+#      key: ${OPEN_WEATHER_API_KEY}
+      key: fcfe473da53a52f7bfa35d45aba49172
+#      key: fcfe473da53a52f7bfa35d45aba4917
